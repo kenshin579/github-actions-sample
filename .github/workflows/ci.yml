@@ -3,12 +3,14 @@
 
 name: Java CI with Gradle
 
+# define github events
 on:
   push:
     branches: [ master ]
   pull_request:
     branches: [ master ]
 
+# events occured the all actions are executed
 jobs:
   build-java:
 
@@ -29,9 +31,10 @@ jobs:
       run: ./gradlew build
 
     - name: Build and Push Docker Image
-      uses: mr-smithers-excellent/docker-build-push@v4
+      uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        image: nanajanashia/demo-app
+        image: kenshin579/demo-app
+        tags: v1,latest
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}

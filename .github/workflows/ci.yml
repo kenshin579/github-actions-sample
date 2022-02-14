@@ -14,7 +14,13 @@ on:
 jobs:
   build-java:
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    continue-on-error: ${{ matrix.experimental }}
+    strategy:
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        java: [ 8 ]
+        experimental: [ false ]
     
     steps:
     - uses: actions/checkout@v2
@@ -33,7 +39,7 @@ jobs:
     - name: Build and Push Docker Image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        image: kenshin579/demo-app
+        image: kenshin579/github-sample-app
         tags: v1,latest
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
